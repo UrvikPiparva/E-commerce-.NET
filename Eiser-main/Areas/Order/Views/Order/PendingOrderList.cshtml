@@ -1,0 +1,115 @@
+﻿@{
+    ViewData["Title"] = "Pending Orders";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Orders</h1>
+        </div>
+        @if (ViewBag.Complete != null)
+        {
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Eiser</strong>
+                    <small>Just Now</small>
+                </div>
+                <div class="toast-body">
+                    @ViewBag.Complete
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Pending Orders</h4>
+                        <div class="card-header-form">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" id="sample_1">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <a class="btn btn-outline-success m-2" asp-area="Order" asp-controller="Order" asp-action="ExportToExcel">Excel Export</a>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-2">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Order ID</th>
+                                        <th class="text-center">Customer Name</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Total</th>
+                                        <th class="text-center">Date Added</th>
+                                        <th class="text-center">Date Modified</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sample_2">
+                                    @foreach (DataRow dataRow in Model.Rows)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                @dataRow["OrderID"]
+                                            </td>
+                                            <td class="text-center">
+                                                @dataRow["FirstName"]
+                                            </td>
+                                            <td class="text-center">
+                                                @if (dataRow["OrderStatus"] != null)
+                                                {
+                                                    <span class="badge @(dataRow["OrderStatus"].ToString() == "Pending" ? "badge-light-warning" : "badge-light-success")">@dataRow["OrderStatus"]</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-light-info">N/A</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @dataRow["Price"]
+                                            </td>
+                                            <td class="text-center">
+                                                @Convert.ToDateTime(dataRow["Created"]).ToString("dd-MM-yyyy")
+                                            </td>
+                                            <td class="text-center">
+                                                @Convert.ToDateTime(dataRow["Modified"]).ToString("dd-MM-yyyy")
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-outline-success" asp-area="Order" asp-controller="Order" asp-action="OrderComplete" asp-route-orderid="@Convert.ToInt32(dataRow["OrderID"])">Complete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+    </script>
+}

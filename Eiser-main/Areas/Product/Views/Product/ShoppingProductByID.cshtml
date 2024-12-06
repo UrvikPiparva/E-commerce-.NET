@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@using ECommerce.BAL
+@model DataTable
+
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content d-md-flex justify-content-between align-items-center">
+                <div class="mb-3 mb-md-0">
+                    <h2>Product Details</h2>
+                    <p>Very us move be blessed multiply night</p>
+                </div>
+                @*<div class="page_link">
+                    <a>Home</a>
+                    <a>Product Details</a>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Single Product Area =================-->
+<div class="product_image_area">
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-6">
+                <div class="s_product_img">
+                    <img src="@Url.Content(Model.Rows[0]["DisplayImage"].ToString())"
+                         alt="" style="width: 200px; height: auto;" />
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+                    <h3>@Model.Rows[0]["ProductName"]</h3>
+                    <h2>@Model.Rows[0]["Price"]</h2>
+                    <p>
+                        @Model.Rows[0]["Discription"]
+                     
+                    </p>
+                   
+                    <div class="card_area">
+                        <a class="main_btn m-4" asp-area="Cart" asp-controller="Cart" asp-action="CartInsert" asp-route-productid="@Convert.ToInt32(Model.Rows[0]["ProductID"])" asp-route-userid="@Convert.ToInt32(CommenVariable.UserID())">Add to Cart</a>
+                       @* <a class="icon_btn" href="#">
+                            <i class="lnr lnr lnr-heart"></i>
+                        </a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Single Product Area =================-->

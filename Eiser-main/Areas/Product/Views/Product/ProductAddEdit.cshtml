@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Product Add";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@model ECommerce.Areas.Product.Models.ProductModel
+
+
+
+<div class="main-content">
+    <section class="section">
+        @*<div class="section-header">
+            <h1>Prodduct Add/Edit</h1>
+        </div>*@
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Products Add/Edit</h4>
+                        <div class="card-header-form">
+                            <a class="btn btn-secondary m-2" asp-area="SEC_Admin" asp-controller="SEC_Admin" asp-action="SEC_AdminDashboard">Back</a>
+                        </div>
+                        
+                    </div>
+
+                    <div class="section-body">
+                        <form method="post" asp-controller="Product" asp-action="ProductSave" asp-area="Product" enctype="multipart/form-data">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            @Html.HiddenFor(x => x.ProductID)
+                            @Html.HiddenFor(x => x.DisplayImage)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label>Product name</label>
+                                                <input type="text" asp-for="ProductName" class="form-control" required>
+                                                <span asp-validation-for="ProductName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                <select class="form-control" asp-for="CategoryID" asp-items="@(new SelectList(ViewBag.CategoryList,"CategoryID","CategoryName"))">
+                                                    <option>Select Category</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Product Image</label>
+                                                <input type="file" asp-for="File" class="form-control" required>
+                                                <span asp-validation-for="File" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <input type="text" asp-for="Discription" class="form-control" required>
+                                                <span asp-validation-for="Discription" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Price</label>
+                                                <input type="text" asp-for="Price" class="form-control" required>
+                                                <span asp-validation-for="Price" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Code</label>
+                                                <input type="text" asp-for="Code" class="form-control" required>
+                                                <span asp-validation-for="Code" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Discount</label>
+                                                <input type="text" asp-for="Discount" class="form-control" required>
+                                                <span asp-validation-for="Discount" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Rating</label>
+                                                <input type="text" asp-for="Rating" class="form-control" required>
+                                                <span asp-validation-for="Rating" class="text-danger"></span>
+                                            </div>
+                                            <div class="card-footer text-right">
+                                                <button class="btn btn-success mr-1" type="submit">Submit</button>
+                                                <a class="btn btn-danger" asp-area="Product" asp-controller="Product" asp-action="ProductList" type="reset">Cancle</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "User List";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Users--</h1>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Users</h4>
+                        <div class="card-header-form">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" id="sample_1">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-2">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Customer Name</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Created Date</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sample_2">
+                                    @foreach (DataRow dataRow in Model.Rows)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                <a class="text-gray-800 text-hover-primary mb-1">@dataRow["FirstName"] @dataRow["LastName"]</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="#" class="text-gray-600 text-hover-primary mb-1">@dataRow["EmailAddress"]</a>
+                                            </td>
+                                            <td class="text-center">
+                                                @(dataRow["isActive"].ToString() == "True" ? "Active" : "Inactive")
+                                            </td>
+                                            <td class="text-center">
+                                                @Convert.ToDateTime(dataRow["Created"]).ToString("dd-MM-yyyy")
+                                            </td>
+                                            <td class="text-center">
+                                                <form method="post" asp-area="SEC_User" asp-controller="SEC_User" asp-action="SEC_User_SelectByPK" asp-route-userid="@Convert.ToInt32(dataRow["UserID"])">
+                                                    <button type="submit" class="btn btn-secondary btn-xs">
+                                                        View
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+    </script>
+}

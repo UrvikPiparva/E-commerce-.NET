@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "User";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@using System.Data
+@using ECommerce.BAL
+@model ECommerce.Models.ViewModel
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Profile</h1>
+        </div>
+        <div class="section-body">
+            <h2 class="section-title">@Model.UserDetails.Rows[0]["FirstName"] @Model.UserDetails.Rows[0]["LastName"] (@Model.UserDetails.Rows[0]["EmailAddress"])</h2>
+            <div class="row mt-sm-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form method="post" class="needs-validation" novalidate="">
+                            <div class="card-header">
+                                <h4>Orders</h4>
+                            </div>
+                            <table class="table table-striped" id="table-2">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Order No.</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Amount</th>
+                                        <th class="text-center">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (DataRow dataRow in Model.UserOrderDetails.Rows)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                <a class="text-gray-600 text-hover-primary mb-1">#@dataRow["OrderID"]</a>
+                                            </td>
+                                            <td class="text-center">
+                                                @if (dataRow["OrderStatus"] != null)
+                                                {
+                                                    <span class="badge @(dataRow["OrderStatus"].ToString() == "Pending" ? "badge-light-warning" : "badge-light-success")">@dataRow["OrderStatus"]</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-light-info">N/A</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">@dataRow["Price"]</td>
+                                            <td class="text-center">@Convert.ToDateTime(dataRow["Created"]).ToString("dd-MM-yyyy")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

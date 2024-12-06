@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@using System.Data
+@using ECommerce.BAL
+@model DataTable
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Hello!</h1>
+        </div>
+        <div class="row">
+            @foreach (DataRow dataRow in Model.Rows)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-primary">
+                            <i class="far fa-user"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Products</h4>
+                            </div>
+                            <div class="card-body">
+                                @dataRow["ProductCount"]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-danger">
+                            <i class="far fa-newspaper"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Active User</h4>
+                            </div>
+                            <div class="card-body">
+                                @dataRow["UserCount"]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-warning">
+                            <i class="far fa-file"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Categories</h4>
+                            </div>
+                            <div class="card-body">
+                                @dataRow["CategoryCount"]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-success">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Orders</h4>
+                            </div>
+                            <div class="card-body">
+                                @dataRow["OrderCount"]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>
+<!--end:::Main--> 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

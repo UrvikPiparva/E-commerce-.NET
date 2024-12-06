@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@using ECommerce.BAL
+@model ECommerce.Models.ViewModel
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content d-md-flex justify-content-between align-items-center">
+                <div class="mb-3 mb-md-0">
+                    <h2>Product Checkout</h2>
+                    <p>Very us move be blessed multiply night</p>
+                </div>
+                <div class="page_link">
+                    <a href="index.html">Home</a>
+                    <a href="checkout.html">Product Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        <div class="billing_details">
+            <div class="row">
+                <div class="order_box">
+                    <h2>Your Order</h2>
+                    <ul class="list">
+                        <li>
+                            <a href="#">
+                                Product
+                                <span>Total</span>
+                            </a>
+                        </li>
+                        <li>
+                            @foreach (DataRow dataRow in Model.CartTable.Rows)
+                            {
+                                <a href="#">
+                                    @dataRow["ProductName"]
+                                    <span class="middle">x @dataRow["Quantity"]</span>
+                                    <span class="last">$@(Convert.ToDouble(dataRow["Price"]) * Convert.ToDouble(dataRow["Quantity"]))</span>
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                    <ul class="list list_2">
+                        <li>
+                            <a href="#">
+                                Subtotal
+                                <span>$@Model.CartTable.Rows[0]["CartTotal"]</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <form asp-area="Order" asp-controller="Order" asp-action="Order_Insert" method="post">
+                        <input type="hidden" name="userid" value="@Convert.ToInt32(CommenVariable.UserID())" />
+                        <input type="hidden" name="addressid" value="@Model.AddressTable.Rows[0]["AddressID"]" />
+
+                        @foreach (DataRow dataRow in Model.CartTable.Rows)
+                        {
+                            <input type="hidden" name="productids[]" value="@dataRow["ProductID"]" />
+                        }
+
+                        <button type="submit" class="main_btn">Place Order</button>
+                    </form>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->

@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Product List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ProductFilterModel productFilterModel = new ProductFilterModel();
+}
+
+@using System.Data
+@using ECommerce.Areas.Product.Models
+@model DataTable
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content d-md-flex justify-content-between align-items-center">
+                <div class="mb-3 mb-md-0">
+                    <h2>My Shop</h2>
+                    <p>Unlock a world of convenience with our e-commerce platform - where shopping meets seamless satisfaction</p>
+                </div>
+                @*<div class="page_link">
+                    <a>Home</a>
+                    <a>Shop</a>
+                    <a>Women Fashion</a>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Category Product Area =================-->
+<section class="cat_product_area section_gap">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-9">
+                <div class="product_top_bar">
+                    <form asp-action="ProductFilter" asp-controller="Product" asp-area="Product" method="POST" class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <select class="form-control" asp-for="@productFilterModel.CategoryID" asp-items="@(new SelectList(ViewBag.CategoryList, "CategoryID", "CategoryName"))">
+                                    <option value="">Select Category</option>
+                                </select>
+                                <span asp-validation-for="@productFilterModel.CategoryID" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" style="align-content:first baseline" id="floatingZip" placeholder="Product Name" asp-for="@productFilterModel.ProductName">
+                            </div>
+                            
+                        </div>
+                        @*<div class="d-flex justify-content-between align-items-center">*@
+                            <div style="align-content:flex-end">
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-outline-success">Submit</button>
+                                <button type="submit" class="btn btn-outline-secondary" runat="server" OnClientClick="this.form.reset();return false;">Reset</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="latest_product_inner">
+                    <div class="row">
+                        @foreach (DataRow dataRow in Model.Rows)
+                        {
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <a asp-area="Product" asp-controller="Product" asp-action="ShoppingProductByID" asp-route-productid="@Convert.ToInt32(dataRow["ProductID"])">
+                                            <img class="card-img"
+                                                 src="@Url.Content(dataRow["DisplayImage"].ToString())"
+                                                 alt="" />
+                                        </a>
+                                        @*<div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>*@
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>@dataRow["ProductName"]</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$@dataRow["Price"]</span>
+                                            <del>$@(Convert.ToDouble(dataRow["Price"])+100)</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Category Product Area =================-->

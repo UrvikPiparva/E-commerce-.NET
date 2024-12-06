@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Sign In";
+    Layout = "~/Views/Shared/_Layout_SignIn.cshtml";
+}
+
+@using ECommerce.Areas.SEC_User.Models;
+@model SEC_UserModel
+
+<div class="card card-primary">
+    <div class="card-header"><h4>Login</h4></div>
+
+    <div class="card-body">
+        <form method="POST" asp-area="SEC_User" asp-action="Login" asp-controller="SEC_User" class="needs-validation" novalidate="">
+            <lable><div class="text-danger">@Html.Raw(TempData["Error"]) </div></lable>
+            <div class="form-group">
+                <label for="email">User Name</label>
+                <input id="email" type="text" class="form-control" autocomplete="off" asp-for="UserName" tabindex="1" autofocus>
+                <lable><div class="text-danger">@Html.Raw(TempData["UserNameError"]) </div></lable>
+            </div>
+
+            <div class="form-group">
+                <div class="d-block">
+                    <label for="password" class="control-label">Password</label>
+                </div>
+                <input id="password" type="password" asp-for="Password" autocomplete="off" class="form-control" tabindex="2">
+                <div class="text-danger">@Html.Raw(TempData["PasswordError"]) </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                    Login
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="mt-5 text-muted text-center">
+    Don't have an account? <a asp-area="SEC_User" asp-action="SEC_UserSignUp" asp-controller="SEC_User">Create One</a>
+</div>

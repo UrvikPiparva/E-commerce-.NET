@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Sign Up";
+    Layout = "~/Views/Shared/_Layout_SignUp.cshtml";
+}
+
+@using ECommerce.Areas.SEC_User.Models;
+@model SEC_UserModel
+
+
+<div class="card card-primary">
+    <div class="card-header"><h4>Register</h4></div>
+
+    <div class="card-body">
+        <form method="POST" asp-area="SEC_User" asp-controller="SEC_User" asp-action="Register">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="frist_name">User Name</label>
+                    <input id="frist_name" autocomplete="off" asp-for="UserName" type="text" class="form-control" autofocus>
+                    <div class="text-danger">@Html.Raw(TempData["UserNameError"]) </div>
+                </div>
+                <div class="form-group col-6">
+                    <label for="frist_name">Password</label>
+                    <input id="frist_name" autocomplete="off" asp-for="Password" type="password" class="form-control" autofocus>
+                    <div class="text-danger">@Html.Raw(TempData["PasswordError"]) </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="frist_name">First Name</label>
+                    <input id="frist_name" autocomplete="off" asp-for="FirstName" type="text" class="form-control" autofocus>
+                    <div class="text-danger">@Html.Raw(TempData["FirstNameError"]) </div>
+                </div>
+                <div class="form-group col-6">
+                    <label for="frist_name">Last Name</label>
+                    <input id="frist_name" autocomplete="off" asp-for="LastName" type="text" class="form-control" autofocus>
+                    <div class="text-danger">@Html.Raw(TempData["LastNameError"]) </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" autocomplete="off" asp-for="EmailAddress" class="form-control" name="email">
+                <div class="text-danger">@Html.Raw(TempData["EmailAddressError"]) </div>
+            </div>
+
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="agree" class="custom-control-input" id="agree">
+                    <label class="custom-control-label" for="agree">I agree with the terms and conditions</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    Register
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

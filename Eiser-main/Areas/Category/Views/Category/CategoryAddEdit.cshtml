@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Category Add";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@model ECommerce.Areas.Category.Models.CategoryModel
+
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Add/Edit</h1>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Category Add/Edit</h4>
+                        <div class="card-header-form">
+                            <a class="btn btn-secondary m-2" asp-area="SEC_Admin" asp-controller="SEC_Admin" asp-action="SEC_AdminDashboard">Back</a>
+                        </div>
+
+                    </div>
+
+                    <div class="section-body">
+                        <form method="post" asp-controller="Category" asp-action="CategorySave" asp-area="Category">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            @Html.HiddenFor(x => x.CategoryID)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label>Category name</label>
+                                                <input type="text" asp-for="CategoryName" class="form-control" required>
+                                                <span asp-validation-for="CategoryName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <input type="text" asp-for="Description" class="form-control" required>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
+                                            <div class="card-footer text-right">
+                                                <button class="btn btn-success mr-1" type="submit">Submit</button>
+                                                <a class="btn btn-danger" asp-area="Category" asp-controller="Category" asp-action="CategoryList" type="reset">Cancle</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
